@@ -1,83 +1,103 @@
-� //Crie uma fun��o chamada "calcularMedia" que recebe como par�metro uma struct "Aluno", esta struct ter� informa��es como: nome, data de nascimento, duas notas e m�dia e retorna a m�dia das notas. Em seguida, crie um programa que declare um array de 5 alunos e utilize a fun��o "calcularMedia" para imprimir a m�dia de cada aluno. Tamb�m crie uma fun��o para verificar se um aluno est� aprovado ou reprovado sendo necess�rio m�dia maior ou igual a 7,0 para aprova��o.
-
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <locale.h>
 
-    struct dados_aluno;
+struct dados_alunos
 {
+    char dataDeNascimento[250];
     char nome[200];
-    int datadenascimento;
-    float notaum;
-    float notadois;
+    float nota[5];
     float media;
 };
 
-void limpaTela()
+void titulo()
 {
-    fflush(stdin);
-    system("cls|| clear");
+    system("cls || clear");
+    printf("Programa Aprovado/Reprovado\n");
 }
 
-int i;
-int j;
-float media;
-
-float CalcularMedia(float dados_aluno, float media;)
+float calcularMedia(float numero[])
 {
-    
-    media = (aluno.notaum + aluno.notadois) / 2;
-}
+    int i;
+    float soma = 0, media;
 
-void aprovadooureprovado(struct dados_aluno, float media)
-{
-    if(media >= 7){
-        printf("Aprovado!");
-    } else {
-        printf("Reprovado!");
+    for (i = 0; i < 2; i++)
+    {
+        soma += numero[i];
     }
+    return media = soma / 2;
+}
+
+char *conceito(float valor)
+{
+    char turma[250];
+
+    if (valor >= 7)
+    {
+        strcpy(turma, "Aprovado!!");
+    }
+    else
+    {
+        strcpy(turma, "Reprovado!!");
+    }
+
+    return turma;
 }
 
 int main()
 {
-
-    struct dados_aluno aluno[3];
-
     setlocale(LC_ALL, "portuguese");
 
-    printf("\n Dados do aluno...\n");
+    // Vari?veis
 
-    for (i = 0; i < 3; i++)
-    {
-        fflush(stdin);
+    int i, j;
+    struct dados_alunos aluno[5];
 
-        printf("\n");
-        printf("Digite o nome do aluno: \n");
-        gets(aluno[i].nome);
+    // Comandos
 
-        printf("Digite a data de nascimento do aluno: \n");
-        scanf("%d", &aluno[i].datadenascimento);
-
-        printf("Digite a primeira nota do aluno: \n");
-        scanf("%f", &aluno[i].notaum);
-
-        printf("Digite a segunda nota do aluno: \n");
-        scanf("%f", &aluno[i].notadois);
-    }
-
+    titulo();
     printf("\n");
-
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < 5; i++)
     {
+        printf("Nome do %dº aluno: ", i + 1);
+        gets(aluno[i].nome);
+        printf("Data de nascimento: ");
+        gets(aluno[i].dataDeNascimento);
+
+        for (j = 0; j < 2; j++)
+        {
+            do
+            {
+                printf("Digite a %dº nota: ", j + 1);
+                scanf("%f", &aluno[i].nota[j]);
+
+                if (aluno[i].nota[j] < 0 || aluno[i].nota[j] > 10)
+                {
+                    printf("Nota inválida!\n");
+                }
+
+            } while (aluno[i].nota[j] < 0 || aluno[i].nota[j] > 10);
+        }
+        fflush(stdin);
         printf("\n");
-        printf("- NOME: %s \n", aluno[i].nome);
-        printf("- Data de nascimento: %d\n", aluno[i].datadenascimento);
 
-        printf("A primeira nota do aluno: %1.f \n", aluno[i].notaum);
-        printf("A segunda nota do aluno: %1.f \n", aluno[i].notadois);
-
-        CalcularMedia(aluno[i]);
-        aprovadooureprovado(aluno[i],media);
+        aluno[i].media = calcularMedia(aluno[i].nota);
     }
+
+    titulo();
+    printf("\n");
+    for (i = 0; i < 5; i++)
+    {
+        printf("Nome do %dº aluno: %s\n", i + 1, aluno[i].nome);
+        printf("Data de nascimento: %s\n", aluno[i].dataDeNascimento);
+        for (j = 0; j < 2; j++)
+        {
+            printf("%dº nota: %.2f\n", j + 1, aluno[i].nota[j]);
+        }
+        printf("Média: %.2f\n", aluno[i].media);
+        printf("%s\n\n", conceito(aluno[i].media));
+    }
+
     return 0;
 }
